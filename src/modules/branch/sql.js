@@ -33,52 +33,44 @@ const GET_BRANCH = `
     where branches.branch_id = $1
 `
 
-const ADD_USER = `
-    insert into staffs (
-        branch_id,
-        staff_name,
-        staff_password,
-        birth_date,
-        staff_gender
-    ) values ($1, $2, $3, $4, $5)
+const ADD_BRANCH = `
+    insert into branches (
+        branch_name,
+        branch_address
+    ) values ($1, $2)
     returning *
 `
 
-const FIND_STAFF = `
-    select
-        staff_id,
-        branch_id,
-        staff_name,
-        staff_password,
-        birth_date,
-        staff_gender,
-        staff_created_at
-    from staffs
-    where staff_name = $1 and staff_password = $2
+const CHANGE_BRANCH = `
+update branches b set
+    branch_name = (
+        case
+            when length($2) > 0 then $2
+            else b.branch_name
+        end
+    ),
+    branch_address = (
+        case
+            when length($3) > 0 then $3
+            else b.branch_address
+        end
+    )
+where branch_id::varchar = $1
+returning *
 `
 
 
-
-
-
-
-
-const GET_PERMISSIONS = `
-select
-    permission_permissions_id,
-    staff_id,
-    created,
-    read,
-    update,
-    delete
-from  permission_permissions 
-where staff_id = $1 
+const DELETE_BRENCH = `
+delete from branches
+where
+branch_id::varchar = $1
+returning * 
 `
 
 export default {
-    GET_PERMISSIONS,
+    DELETE_BRENCH,
     GET_BRANCHES,
-    FIND_STAFF,
+    CHANGE_BRANCH,
     GET_BRANCH,
-    ADD_USER
+    ADD_BRANCH
 }

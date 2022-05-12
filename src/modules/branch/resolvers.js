@@ -9,27 +9,18 @@ export default {
 
 
         addBranch: async (_, args, { agent }) => {
-            if (!args.staffName.trim() || !args.password.trim()) {
+            if (!args.branchName.trim() || !args.address.trim()) {
                 throw new UserInputError("The username and password are required!")
             }
 
-            const staff = await model.addBranch(args)
-            console.log(staff);
+            const branch = await model.addBranch(args)
 
-            if (!staff) {
-                return {
-                    status: 400,
-                    message: "The staff not exist!",
-                    data: null,
-                    token: null
-                }
-            }
 
             return {
                 status: 200,
-                message: "The staff Succsesfully logged in!",
-                data: staff,
-                token: jwt.sign({ userId: staff.staff_id,  agent})
+                message: "The branch added!",
+                data: branch,
+                token: null
             }
         },
 
@@ -37,32 +28,32 @@ export default {
 
         changeBranch: async (_, args) => {
             if (
-                (args.username && !args.username.trim()) ||
-                (args.contact && !args.contact.trim())
+                (args.branchName && !args.branchName.trim()) ||
+                (args.address && !args.address.trim())
             ) {
                 throw new UserInputError("The username or contact cannot be empty!")
             }
 
-            const user = await model.changeUser(args)
+            const branch = await model.changeBranch(args)
             
             return {
                 status: 200,
-                message: "The user changed!",
-                data: user
+                message: "The branch changed!",
+                data: branch
             }
         },
 
         deleteBranch: async (_, args) => {
-            const user = await model.deleteUser(args)
+            const branch = await model.deleteBranch(args)
 
-            if (!user) {
-                throw new NotFoundError("The user not found!") 
+            if (!branch) {
+                throw new NotFoundError("The branch not found!") 
             }
             
             return {
                 status: 200,
-                message: "The user deleted!",
-                data: user
+                message: "The branch deleted!",
+                data: branch
             }
         },
 

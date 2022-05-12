@@ -5,10 +5,10 @@ insert into branches (branch_name, branch_address) values
 
 
 insert into staffs ( staff_name, staff_password, branch_id, birth_date, staff_gender) values 
-('admin', 'admin', 1, '1999-02-21', 'M'),
-('Komiljon4717', 'Komiljon4717', 1, '2000-07-21', 'M'),
-('Umidjon007', 'Umidjon007', 3, '2002-10-14', 'M'),
-('Ali001', 'Ali001', 2, '1999-02-14', 'M');
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, '1999-02-21', 'M'),
+('Komiljon4717', '36a9f9bee92bc3cbb0852d202a42d65550a3422331ae712b341b136d0e3b1a0f', 1, '2000-07-21', 'M'),
+('Umidjon007', 'b307ed8506bd430b8e679e3eb159d9475a7907b97a1d63d55027a7ba5ca8eca9', 3, '2002-10-14', 'M'),
+('Ali001', '2d5d9237af61efa64fac324bcee0c35c9a3327fbf1d33a7b4cb7da5f7d91fbce', 2, '1999-02-14', 'M');
 
 
 

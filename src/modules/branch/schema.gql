@@ -19,18 +19,18 @@ type Mutation {
 
 
     addBranch(
-        staffName: String!
-        password: String!
+        branchName: String!
+        address: String!
     ): MutationResponse!
 
 
     changeBranch(
-        userId: ID!
-        username: String
-        contact: String
+        branchId: ID!
+        branchName: String
+        address: String
     ): MutationResponse!
 
-    deleteBranch(userId: ID!): MutationResponse!
+    deleteBranch(branchId: ID!): MutationResponse!
 }
 
 type Branch {

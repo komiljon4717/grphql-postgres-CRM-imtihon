@@ -8,14 +8,14 @@ import http from 'http'
 import '#config/index'
 
 import schema from './modules/index.js'
-// import context from './context.js'
+import context from './context.js'
 
 !async function () {
     const app = express()
     const httpServer = http.createServer(app)
     const server = new ApolloServer({
         schema,
-        // context,
+        context,
         csrfPrevention: true,
         introspection: true,
         plugins: [

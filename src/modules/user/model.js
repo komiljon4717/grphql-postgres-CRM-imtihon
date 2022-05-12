@@ -23,7 +23,7 @@ async function getStaff({ staffId }) {
 
 
 async function addUser({ branchId, staffName, password, birthDate, gender }) {
-    const [staff] = await db(query.ADD_USER, branchId, staffName, password, birthDate, gender)
+    const [staff] = await db(query.ADD_STAFF, branchId, staffName, password, birthDate, gender)
     return staff
 }
 
@@ -32,9 +32,9 @@ async function findStaff({ staffName, password }) {
     return user
 }
 
-async function getPermission({ userId }) {
-    const [user] = await db(query.GET_PERMISSIONS, satffId)
-    return user
+async function getPermission({ staffId }) {
+    const [per] = await db(query.GET_PERMISSIONS, staffId)
+    return per
 }
 
 export default {

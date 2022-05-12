@@ -7,7 +7,7 @@ export default {
     GlobalType: {
         __resolveType: object => {
             if (object.staff_name) return 'Staff'
-            if (object.staff_name) return 'Branch'
+            if (object.branch_name) return 'Branch'
             return null
         }
     }

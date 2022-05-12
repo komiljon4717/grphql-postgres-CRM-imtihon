@@ -33,7 +33,7 @@ export default {
                 status: 200,
                 message: "The staff created!",
                 data: staff,
-                token: jwt.sign({ userId: staff.staff_id,  agent})
+                token: jwt.sign({ staffId: staff.staff_id,  agent})
             }
         },
 
@@ -59,53 +59,23 @@ export default {
                 status: 200,
                 message: "The staff Succsesfully logged in!",
                 data: staff,
-                token: jwt.sign({ userId: staff.staff_id,  agent})
+                token: jwt.sign({ staffId: staff.staff_id,  agent})
             }
-        },
-
-
-
-
-
-
-
-        // changeUser: async (_, args) => {
-        //     if (
-        //         (args.username && !args.username.trim()) ||
-        //         (args.contact && !args.contact.trim())
-        //     ) {
-        //         throw new UserInputError("The username or contact cannot be empty!")
-        //     }
-
-        //     const user = await model.changeUser(args)
-            
-        //     return {
-        //         status: 200,
-        //         message: "The user changed!",
-        //         data: user
-        //     }
-        // },
-
-        // deleteUser: async (_, args) => {
-        //     const user = await model.deleteUser(args)
-
-        //     if (!user) {
-        //         throw new NotFoundError("The user not found!") 
-        //     }
-            
-        //     return {
-        //         status: 200,
-        //         message: "The user deleted!",
-        //         data: user
-        //     }
-        // },
-
-
+        }
     },
+
+
 
     Query: {
         staffs: async (_, { pagination, search, sort }, { agent, token }) => {
             const sortKey = Object.keys(sort || {})[0]
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermission(staff)
+            
+            if (!permission?.read) {
+                return [await model.getStaff(staff)]
+            }
 
 
             return await model.getStaffs({

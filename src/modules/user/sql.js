@@ -39,7 +39,7 @@ const GET_STAFF = `
     where s.staff_id = $1
 `
 
-const ADD_USER = `
+const ADD_STAFF = `
     insert into staffs (
         branch_id,
         staff_name,
@@ -86,5 +86,5 @@ export default {
     FIND_STAFF,
     GET_STAFFS,
     GET_STAFF,
-    ADD_USER
+    ADD_STAFF
 }

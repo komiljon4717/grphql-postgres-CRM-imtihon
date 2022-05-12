@@ -18,22 +18,24 @@ async function getBranch({ branchId }) {
 }
 
 
-
-
-
-async function addBranch({ branchId, staffName, password, birthDate, gender }) {
-    const [staff] = await db(query.ADD_USER, branchId, staffName, password, birthDate, gender)
-    return staff
+async function addBranch({ branchName, address }) {
+    const [branch] = await db(query.ADD_BRANCH, branchName, address)
+    return branch
 }
 
-async function changeBranch({ staffName, password }) {
-    const [user] = await db(query.FIND_STAFF, staffName, password)
-    return user
+
+
+
+
+
+async function changeBranch({ branchId, branchName, address }) {
+    const [branch] = await db(query.CHANGE_BRANCH, branchId, branchName, address)
+    return branch
 }
 
-async function deleteBranch({ userId }) {
-    const [user] = await db(query.GET_PERMISSIONS, satffId)
-    return user
+async function deleteBranch({ branchId }) {
+    const [branch] = await db(query.DELETE_BRENCH, branchId)
+    return branch
 }
 
 export default {
