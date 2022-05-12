@@ -106,8 +106,6 @@ export default {
         staffs: async (_, { pagination, search, sort }, { agent, token }) => {
             const sortKey = Object.keys(sort || {})[0]
 
-            console.log(agent);
-            console.log(token);
 
             return await model.getStaffs({
                 page: pagination?.page || USER_CONFIG.PAGINATION.PAGE,
@@ -124,7 +122,7 @@ export default {
         
     },
 
-    User: {
+    Staff: {
         staffId: global => global.staff_id,
         staffName: global => global.staff_name,
         branch: global =>global.branch_id,

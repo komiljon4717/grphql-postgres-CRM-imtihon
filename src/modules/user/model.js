@@ -31,13 +31,13 @@ async function findStaff({ staffName, password }) {
     return user
 }
 
-async function deleteUser({ userId }) {
-    const [user] = await db(query.DELETE_USER, userId)
+async function getPermission({ userId }) {
+    const [user] = await db(query.GET_PERMISSIONS, satffId)
     return user
 }
 
 export default {
-    deleteUser,
+    getPermission,
     findStaff,
     getStaffs,
     addUser,

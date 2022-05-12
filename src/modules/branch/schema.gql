@@ -1,10 +1,10 @@
 type Query {
-    staffs(
+    branches(
         pagination: Pagination
         search: String
         sort: Sort
-    ): [Staff!]!
-    staff(staffId: ID!): Staff
+    ): [Branch!]!
+    branch(staffId: ID!): Branch
 }
 
 type Mutation {
@@ -24,20 +24,18 @@ type Mutation {
     ): MutationResponse!
 
 
-    # changeUser(
-    #     userId: ID!
-    #     username: String
-    #     contact: String
-    # ): MutationResponse!
+    changeUser(
+        userId: ID!
+        username: String
+        contact: String
+    ): MutationResponse!
 
-    # deleteUser(userId: ID!): MutationResponse!
+    deleteUser(userId: ID!): MutationResponse!
 }
 
-type Staff {
-    staffId: ID!
-    staffName: String!
-    branch: String!
-    birthDate: String!
-    gender: String!
+type Branch {
+    branchId: ID!
+    branchName: String!
+    branchAddress: String!
     time: String!
 }

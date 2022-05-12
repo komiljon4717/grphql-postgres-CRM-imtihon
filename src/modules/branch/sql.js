@@ -1,27 +1,24 @@
-const GET_STAFFS = `
+const GET_BRANCHES = `
     select 
-        s.staff_id,
-        s.staff_name,
-        s.branch_id,
-        s.birth_date,
-        s.staff_gender,
-        s.staff_created_at
-    from staffs as s
-    inner join branches as b on s.branch_id = b.branch_id
+        branch_id,
+        branch_name,
+        branch_address,
+        branch_created_at
+    from branches
     where 
-        staff_name ilike concat('%', $3::varchar, '%')
+        branch_name ilike concat('%', $3::varchar, '%')
     order by
     case 
-        when $4 = 'byDate' and $5 = 1 then birth_date
+        when $4 = 'byDate' and $5 = 1 then branch_created_at
     end asc,
     case 
-        when $4 = 'byDate' and $5 = 2 then birth_date
+        when $4 = 'byDate' and $5 = 2 then branch_created_at
     end desc,
     case 
-        when $4 = 'byName' and $5 = 1 then staff_name
+        when $4 = 'byName' and $5 = 1 then branch_name
     end desc,
     case 
-        when $4 = 'byName' and $5 = 2 then staff_name
+        when $4 = 'byName' and $5 = 2 then branch_name
     end asc
     offset $1 limit $2
 `
@@ -83,8 +80,8 @@ where staff_id = $1
 
 export default {
     GET_PERMISSIONS,
+    GET_BRANCHES,
     FIND_STAFF,
-    GET_STAFFS,
     GET_STAFF,
     ADD_USER
 }
