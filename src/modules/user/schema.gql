@@ -1,0 +1,43 @@
+type Query {
+    staffs(
+        pagination: Pagination
+        search: String
+        sort: Sort
+    ): [User!]!
+    staff(staffId: ID!): User
+}
+
+type Mutation {
+    register(
+        branchId: Int!
+        staffName: String!
+        password: String!
+        birthDate: String!
+        gender: String!
+    ): MutationResponse!
+
+
+
+    login(
+        staffName: String!
+        password: String!
+    ): MutationResponse!
+
+
+    changeUser(
+        userId: ID!
+        username: String
+        contact: String
+    ): MutationResponse!
+
+    deleteUser(userId: ID!): MutationResponse!
+}
+
+type User {
+    staffId: ID!
+    staffName: String!
+    branch: String!
+    birthDate: String!
+    gender: String!
+    time: String!
+}

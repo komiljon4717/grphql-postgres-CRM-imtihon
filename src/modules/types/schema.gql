@@ -1,0 +1,27 @@
+## pagination input
+input Pagination {
+    page: Int
+    limit: Int
+}
+
+input Sort {
+    byDate: SortOptions
+    byName: SortOptions
+}
+
+## enum types
+enum SortOptions {
+    toOld
+    toYoung
+}
+
+## object types
+type MutationResponse {
+    status: Int!
+    message: String!
+    data: GlobalType
+    token: String
+}
+
+## union types
+union GlobalType = User
