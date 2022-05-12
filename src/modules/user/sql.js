@@ -81,7 +81,78 @@ from  permission_permissions
 where staff_id = $1 
 `
 
+const ADD_PERMISSIONS = `
+insert into permission_permissions (
+    staff_id,
+    created,
+    read,
+    update,
+    delete
+) values ($1, $2, $3, $4, $5)
+returning *
+`
+
+const ADD_PERMISSIONS_TRANSPORT = `
+insert into permission_transport (
+    staff_id,
+    created,
+    read,
+    update,
+    delete
+) values ($1, $2, $3, $4, $5)
+returning *
+`
+
+
+const ADD_PERMISSIONS_BRANCH = `
+insert into permission_branches (
+    staff_id,
+    created,
+    read,
+    update,
+    delete
+) values ($1, $2, $3, $4, $5)
+returning *
+`
+
+
+
+
+const UPDATE_PERMISSIONS = `
+update permission_permissions p set
+    created = (
+        case
+            when $2 > false then $2
+            else p.created
+        end
+    ),
+    read = (
+        case
+            when $3 > false then $3
+            else p.read
+        end
+    ),
+    update = (
+        case
+            when $4 > false then $4
+            else p.update
+        end
+    ),
+    delete = (
+        case
+            when $5 > false then $5
+            else p.delete
+        end
+    )
+where staff_id::varchar = $1
+returning *
+`
+
 export default {
+    ADD_PERMISSIONS_TRANSPORT,
+    ADD_PERMISSIONS_BRANCH,
+    UPDATE_PERMISSIONS,
+    ADD_PERMISSIONS,
     GET_PERMISSIONS,
     FIND_STAFF,
     GET_STAFFS,

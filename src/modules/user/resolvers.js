@@ -8,6 +8,39 @@ import sha256 from 'sha256'
 export default {
     Mutation: {
 
+        addPermission: async (_, args, { agent, token }) => {
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermission(staff)
+
+            if (!permission?.created) {
+                throw new Error("Not allowed!")
+            }
+
+            const chack = await model.getPermission(args)
+            
+            console.log(chack);
+            if (!chack) {
+                const result = await model.addPermission(args)
+                return {
+                    status: 200,
+                    message: "The permission added!",
+                    data: result,
+                    token: null
+                }
+            }
+
+            const res = await model.updatePermission(args)
+
+            return {
+                status: 200,
+                message: "The permission updated!",
+                data: res,
+                token: null
+            }
+        },
+
+
         register: async (_, args, { agent }) => {
 
             if (!args.staffName.trim() || !args.password.trim()) {
@@ -28,6 +61,10 @@ export default {
             }
 
             const staff = await model.addUser(args)
+            staff.staffId = staff.staff_id
+            const res = await model.addPermission(staff)
+            const auto = await model.addPermissionTransport(staff)
+            const branch = await model.addPermissionBranch(staff)
 
             return {
                 status: 200,
