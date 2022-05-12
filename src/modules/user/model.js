@@ -1,5 +1,6 @@
 import query from './sql.js'
 import db from '#pg'
+import sha256 from 'sha256'
 
 async function getStaffs({ page, limit, search, sortKey, sortValue }) {
     return await db(
@@ -27,7 +28,7 @@ async function addUser({ branchId, staffName, password, birthDate, gender }) {
 }
 
 async function findStaff({ staffName, password }) {
-    const [user] = await db(query.FIND_STAFF, staffName, password)
+    const [user] = await db(query.FIND_STAFF, staffName, sha256(password))
     return user
 }
 

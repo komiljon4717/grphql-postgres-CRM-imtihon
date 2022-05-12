@@ -3,14 +3,17 @@ import { NotFoundError } from '#helpers/errors'
 import { jwt } from '#helpers/jwt'
 import { USER_CONFIG } from '#config/index'
 import model from './model.js'
+import sha256 from 'sha256'
 
 export default {
     Mutation: {
 
         register: async (_, args, { agent }) => {
+
             if (!args.staffName.trim() || !args.password.trim()) {
                 throw new UserInputError("The username and password are required!")
             }
+            args.password = sha256(args.password)
 
             if (!args.birthDate.trim()) {
                 throw new UserInputError("The branchId and birth date are required!")
@@ -26,7 +29,6 @@ export default {
 
             const staff = await model.addUser(args)
 
-            
             return {
                 status: 200,
                 message: "The staff created!",
@@ -42,7 +44,6 @@ export default {
             }
 
             const staff = await model.findStaff(args)
-            console.log(staff);
 
             if (!staff) {
                 return {

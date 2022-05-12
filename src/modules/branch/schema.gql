@@ -4,7 +4,7 @@ type Query {
         search: String
         sort: Sort
     ): [Branch!]!
-    branch(staffId: ID!): Branch
+    branch(branchId: ID!): Branch
 }
 
 type Mutation {
@@ -18,19 +18,19 @@ type Mutation {
 
 
 
-    login(
+    addBranch(
         staffName: String!
         password: String!
     ): MutationResponse!
 
 
-    changeUser(
+    changeBranch(
         userId: ID!
         username: String
         contact: String
     ): MutationResponse!
 
-    deleteUser(userId: ID!): MutationResponse!
+    deleteBranch(userId: ID!): MutationResponse!
 }
 
 type Branch {

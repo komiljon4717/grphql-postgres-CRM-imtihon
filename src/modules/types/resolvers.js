@@ -1,7 +1,7 @@
 export default {
     SortOptions: {
-        toOld: 2,
-        toYoung: 1
+        toLargest: 2,
+        toSmallest: 1
     },
 
     GlobalType: {

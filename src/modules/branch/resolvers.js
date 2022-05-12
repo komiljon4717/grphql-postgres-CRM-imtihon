@@ -7,7 +7,35 @@ import model from './model.js'
 export default {
     Mutation: {
 
-        changeUser: async (_, args) => {
+
+        addBranch: async (_, args, { agent }) => {
+            if (!args.staffName.trim() || !args.password.trim()) {
+                throw new UserInputError("The username and password are required!")
+            }
+
+            const staff = await model.addBranch(args)
+            console.log(staff);
+
+            if (!staff) {
+                return {
+                    status: 400,
+                    message: "The staff not exist!",
+                    data: null,
+                    token: null
+                }
+            }
+
+            return {
+                status: 200,
+                message: "The staff Succsesfully logged in!",
+                data: staff,
+                token: jwt.sign({ userId: staff.staff_id,  agent})
+            }
+        },
+
+
+
+        changeBranch: async (_, args) => {
             if (
                 (args.username && !args.username.trim()) ||
                 (args.contact && !args.contact.trim())
@@ -24,7 +52,7 @@ export default {
             }
         },
 
-        deleteUser: async (_, args) => {
+        deleteBranch: async (_, args) => {
             const user = await model.deleteUser(args)
 
             if (!user) {

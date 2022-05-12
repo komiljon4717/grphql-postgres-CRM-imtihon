@@ -11,8 +11,8 @@ input Sort {
 
 ## enum types
 enum SortOptions {
-    toOld
-    toYoung
+    toLargest
+    toSmallest
 }
 
 ## object types
@@ -24,4 +24,4 @@ type MutationResponse {
 }
 
 ## union types
-union GlobalType = Staff
+union GlobalType = Staff | Branch

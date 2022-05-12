@@ -23,17 +23,14 @@ const GET_BRANCHES = `
     offset $1 limit $2
 `
 
-const GET_STAFF = `
+const GET_BRANCH = `
     select 
-        s.staff_id,
-        s.staff_name,
-        s.birth_date,
-        b.branch_id,
-        s.staff_gender,
-        s.staff_created_at
-    from staffs s
-    inner join branches b on s.branch_id = b.branch_id
-    where s.staff_id = $1
+        branch_id,
+        branch_name,
+        branch_address,
+        branch_created_at
+    from branches 
+    where branches.branch_id = $1
 `
 
 const ADD_USER = `
@@ -82,6 +79,6 @@ export default {
     GET_PERMISSIONS,
     GET_BRANCHES,
     FIND_STAFF,
-    GET_STAFF,
+    GET_BRANCH,
     ADD_USER
 }

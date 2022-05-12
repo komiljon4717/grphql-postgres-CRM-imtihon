@@ -32,8 +32,8 @@ create table branches (
 drop table if exists staffs cascade;
 create table staffs (
     staff_id serial primary key,
-    staff_name character varying(255) not null,
-    staff_password character varying(255) not null,
+    staff_name character varying(255) unique not null,
+    staff_password character varying(255) unique not null,
     branch_id int not null references branches(branch_id),
     birth_date date not null,
     staff_gender char(1) check(staff_gender in ('F','M')),

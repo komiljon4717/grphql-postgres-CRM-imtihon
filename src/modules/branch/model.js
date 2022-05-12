@@ -12,8 +12,8 @@ async function getBranches({ page, limit, search, sortKey, sortValue }) {
     )
 }
 
-async function getBranch({ staffId }) {
-    const [staff] = await db(query.GET_STAFF, staffId)
+async function getBranch({ branchId }) {
+    const [staff] = await db(query.GET_BRANCH, branchId)
     return staff
 }
 
@@ -21,25 +21,25 @@ async function getBranch({ staffId }) {
 
 
 
-// async function addUser({ branchId, staffName, password, birthDate, gender }) {
-//     const [staff] = await db(query.ADD_USER, branchId, staffName, password, birthDate, gender)
-//     return staff
-// }
+async function addBranch({ branchId, staffName, password, birthDate, gender }) {
+    const [staff] = await db(query.ADD_USER, branchId, staffName, password, birthDate, gender)
+    return staff
+}
 
-// async function findStaff({ staffName, password }) {
-//     const [user] = await db(query.FIND_STAFF, staffName, password)
-//     return user
-// }
+async function changeBranch({ staffName, password }) {
+    const [user] = await db(query.FIND_STAFF, staffName, password)
+    return user
+}
 
-// async function getPermission({ userId }) {
-//     const [user] = await db(query.GET_PERMISSIONS, satffId)
-//     return user
-// }
+async function deleteBranch({ userId }) {
+    const [user] = await db(query.GET_PERMISSIONS, satffId)
+    return user
+}
 
 export default {
-    // getPermission,
-    // findStaff,
+    changeBranch,
+    deleteBranch,
     getBranches,
-    // addUser,
+    addBranch,
     getBranch
 }
