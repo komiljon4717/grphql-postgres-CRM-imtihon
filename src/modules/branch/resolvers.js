@@ -16,7 +16,7 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
             
-            if (!permission?.created) {
+            if (!(permission?.created == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -44,7 +44,7 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
             
-            if (!permission?.update) {
+            if (!(permission?.update == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -64,7 +64,7 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
             
-            if (!permission?.delete) {
+            if (!(permission?.delete == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -88,7 +88,6 @@ export default {
             if (!permission?.created) {
                 throw new Error("Not allowed!")
             }
-
 
             const res = await model.updatePermissionBranch(args)
 
@@ -117,7 +116,7 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
             
-            if (!permission?.read) {
+            if (!(permission?.read == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -136,13 +135,9 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
             
-            if (!permission?.read) {
+            if (!(permission?.read == "true")) {
                 throw new Error("Not allowed!")
             }
-
-
-
-
             return await model.getBranch(args)
         }
         

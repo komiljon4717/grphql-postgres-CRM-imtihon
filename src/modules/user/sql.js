@@ -148,9 +148,46 @@ where staff_id::varchar = $1
 returning *
 `
 
+const GET_STAFF_PERMISSIONS = `
+    select 
+        permission_id,
+        staff_id,
+        created,
+        read,
+        update,
+        delete
+    from permission_permissions
+    inner join branches as b on s.branch_id = b.branch_id
+    where 
+        staff_name ilike concat('%', $3::varchar, '%')
+    order by
+    case 
+        when $4 = 'byDate' and $5 = 1 then birth_date
+    end asc,
+    case 
+        when $4 = 'byDate' and $5 = 2 then birth_date
+    end desc,
+    case 
+        when $4 = 'byName' and $5 = 1 then staff_name
+    end desc,
+    case 
+        when $4 = 'byName' and $5 = 2 then staff_name
+    end asc
+    offset $1 limit $2
+`
+
+
+
+
+
+
+
+
+
 export default {
     ADD_PERMISSIONS_TRANSPORT,
     ADD_PERMISSIONS_BRANCH,
+    GET_STAFF_PERMISSIONS,
     UPDATE_PERMISSIONS,
     ADD_PERMISSIONS,
     GET_PERMISSIONS,

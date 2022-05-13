@@ -13,6 +13,19 @@ async function getStaffs({ page, limit, search, sortKey, sortValue }) {
     )
 }
 
+async function getStaffPermission({ page, limit, search, sortKey, sortValue }) {
+    return await db(
+        query.GET_STAFF_PERMISSIONS,
+        (page - 1) * limit,
+        limit,
+        search,
+        sortKey,
+        sortValue
+    )
+}
+
+
+
 async function getStaff({ staffId }) {
     const [staff] = await db(query.GET_STAFF, staffId)
     return staff
@@ -63,6 +76,7 @@ async function addPermissionBranch({ staffId, create="false", read="false", upda
 export default {
     addPermissionTransport,
     addPermissionBranch,
+    getStaffPermission,
     updatePermission,
     addPermission,
     getPermission,

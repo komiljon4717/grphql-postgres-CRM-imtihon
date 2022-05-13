@@ -10,10 +10,17 @@ export default {
 
         updatePermissionStaff: async (_, args, { agent, token }) => {
 
+            if (!(args.created == "false" || args.created == "true") &&
+             !(args.updated == "false" || args.updated == "true") && 
+             !(args.read == "false" || args.read == "true") &&
+             !(args.deleted == "false" || args.deleted == "true")) {
+                throw new Error("C.R.U.D values must be 'true' or 'false'")
+            }
+
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
 
-            if (!permission?.created) {
+            if (!(permission?.created == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -106,7 +113,7 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
             
-            if (!permission?.read) {
+            if (!(permission?.read == "true")) {
                 return [await model.getStaff(staff)]
             }
 
@@ -125,13 +132,31 @@ export default {
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
             
-            if (!permission?.read) {
+            if (!(permission?.read == "true")) {
                 throw new Error("Not allowed!")
             }
 
-
-
             return await model.getStaff(args)
+        },
+
+        allStaffPermission: async (_, args, { token}) => {
+            const sortKey = Object.keys(sort || {})[0]
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermission(staff)
+            
+            if (!(permission?.read == "true")) {
+                return [await model.getStaff(staff)]
+            }
+
+
+            return await model.getStaffPermission({
+                page: pagination?.page || USER_CONFIG.PAGINATION.PAGE,
+                limit: pagination?.limit || USER_CONFIG.PAGINATION.LIMIT,
+                sortValue: sort ? sort[sortKey] : null,
+                sortKey,
+                search,
+            })
         }
         
     },

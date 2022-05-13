@@ -5,6 +5,17 @@ type Query {
         sort: Sort
     ): [Staff!]!
     staff(staffId: ID!): Staff
+
+
+#########################################
+
+
+    allStaffPermission(
+        pagination: Pagination
+        search: String
+        sort: Sort
+    ): [Permission!]!
+    
 }
 
 type Mutation {
@@ -36,6 +47,15 @@ type Mutation {
 }
 
 type Staff {
+    staffId: ID!
+    staffName: String!
+    branch: String!
+    birthDate: String!
+    gender: String!
+    time: String!
+}
+
+type Permission {
     staffId: ID!
     staffName: String!
     branch: String!
