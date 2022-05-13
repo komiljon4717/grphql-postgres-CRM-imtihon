@@ -10,14 +10,14 @@ export const USER_CONFIG = {
     }
 }
 
-export const FOOD_CONFIG = {
+export const BRANCH_CONFIG = {
     PAGINATION: {
         LIMIT: 10,
         PAGE: 1
     }
 }
 
-export const ORDER_CONFIG = {
+export const TRANSPORT_CONFIG = {
     PAGINATION: {
         LIMIT: 10,
         PAGE: 1

@@ -1,0 +1,56 @@
+scalar Upload
+
+
+type Query {
+    transports(
+        pagination: Pagination
+        search: String
+        sort: Sort
+    ): [Transport!]!
+    transport(autoId: ID!): Transport
+}
+
+type Mutation {
+    register(
+        branchId: Int!
+        staffName: String!
+        password: String!
+        birthDate: String!
+        gender: String!
+    ): MutationResponse!
+
+
+
+    addTransport(
+        autoModel: String!
+        autoBranch: ID!
+        autoColor: String!
+        autoImg: Upload!
+    ): MutationResponse!
+
+
+    changeTransport(
+        branchId: ID!
+        branchName: String
+        address: String
+    ): MutationResponse!
+
+    updatePermissionTransport(
+        staffId: ID!
+        create: String
+        read: String
+        update: String
+        deleted: String
+    ): MutationResponse!
+
+    deleteTransport(branchId: ID!): MutationResponse!
+}
+
+type Transport {
+    autoId: ID!
+    autoModel: String!
+    autoBranch: String!
+    autoColor: String!
+    autoImg: String!
+    time: String!
+}

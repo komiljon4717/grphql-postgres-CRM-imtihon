@@ -1,7 +1,7 @@
 import { UserInputError } from 'apollo-server-express'
 import { NotFoundError } from '#helpers/errors'
 import { jwt } from '#helpers/jwt'
-import { USER_CONFIG } from '#config/index'
+import { BRANCH_CONFIG } from '#config/index'
 import model from './model.js'
 
 export default {
@@ -83,9 +83,18 @@ export default {
         },
 
         updatePermissionBranch: async (_, args, { token }) => {
+
+            if (!(args.created == "false" || args.created == "true") &&
+            !(args.updated == "false" || args.updated == "true") && 
+            !(args.read == "false" || args.read == "true") &&
+            !(args.deleted == "false" || args.deleted == "true")) {
+               throw new Error("C.R.U.D values must be 'true' or 'false'")
+           }
+
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
-            if (!permission?.created) {
+
+            if (!(permission?.created == "true")) {
                 throw new Error("Not allowed!")
             }
 
@@ -121,9 +130,9 @@ export default {
             }
 
 
-            return await model.getBranches({
-                page: pagination?.page || USER_CONFIG.PAGINATION.PAGE,
-                limit: pagination?.limit || USER_CONFIG.PAGINATION.LIMIT,
+            return await model.getTransports({
+                page: pagination?.page || BRANCH_CONFIG.PAGINATION.PAGE,
+                limit: pagination?.limit || BRANCH_CONFIG.PAGINATION.LIMIT,
                 sortValue: sort ? sort[sortKey] : null,
                 sortKey,
                 search,

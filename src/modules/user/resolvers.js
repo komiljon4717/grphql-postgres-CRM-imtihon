@@ -164,7 +164,7 @@ export default {
     Staff: {
         staffId: global => global.staff_id,
         staffName: global => global.staff_name,
-        branch: global =>global.branch_id,
+        branch: global =>global.branch_name,
         birthDate: global => global.birth_date?.toISOString().slice(0,10),
         gender: global => global.staff_gender,
         time: global => global.staff_created_at?.toISOString()

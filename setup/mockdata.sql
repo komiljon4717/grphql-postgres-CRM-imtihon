@@ -4,6 +4,15 @@ insert into branches (branch_name, branch_address) values
 ('Megavat', 'Farg''ona viloyati Farg''ona shahri');
 
 
+
+insert into transports (auto_model, auto_branch, auto_color, auto_img) values
+('Cobalt', 1, 'blue', 'cobalt.jpg'),
+('Malibu', 3, 'black', 'malibu.jpg'),
+('Spark', 2, 'white', 'spark.jpg'),
+('Damas', 4, 'mokriy', 'damas.jpg');
+
+
+
 insert into staffs ( staff_name, staff_password, branch_id, birth_date, staff_gender) values 
 ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, '1999-02-21', 'M'),
 ('Komiljon4717', '36a9f9bee92bc3cbb0852d202a42d65550a3422331ae712b341b136d0e3b1a0f', 1, '2000-07-21', 'M'),

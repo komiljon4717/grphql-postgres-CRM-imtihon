@@ -6,17 +6,19 @@ import { ApolloServer } from 'apollo-server-express'
 import express from 'express'
 import http from 'http'
 import '#config/index'
+import { graphqlUploadExpress } from 'graphql-upload'
 
 import schema from './modules/index.js'
 import context from './context.js'
 
 !async function () {
     const app = express()
+    app.use(graphqlUploadExpress())
     const httpServer = http.createServer(app)
     const server = new ApolloServer({
         schema,
         context,
-        csrfPrevention: true,
+        csrfPrevention: false,
         introspection: true,
         plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),

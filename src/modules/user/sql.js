@@ -5,6 +5,7 @@ const GET_STAFFS = `
         s.branch_id,
         s.birth_date,
         s.staff_gender,
+        b.branch_name,
         s.staff_created_at
     from staffs as s
     inner join branches as b on s.branch_id = b.branch_id

@@ -43,7 +43,7 @@ create table staffs (
 -- transports table
 drop table if exists transports;
 create table transports (
-    auto_id uuid default uuid_generate_v4() primary key,
+    auto_id serial primary key,
     auto_model character varying(255) not null,
     auto_branch int not null references branches(branch_id),
     auto_color character varying(255) not null,
