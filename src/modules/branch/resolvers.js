@@ -106,7 +106,18 @@ export default {
             })
         },
 
-        branch: async (_, args) => {
+        branch: async (_, args, { token }) => {
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermissionBranch(staff)
+            
+            if (!permission?.read) {
+                throw new Error("Not allowed!")
+            }
+
+
+
+
             return await model.getBranch(args)
         }
         

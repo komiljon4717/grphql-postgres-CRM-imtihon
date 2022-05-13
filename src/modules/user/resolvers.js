@@ -19,7 +19,16 @@ export default {
 
             const chack = await model.getPermission(args)
             
-         
+            // console.log(chack);
+            // if (!chack) {
+            //     const result = await model.addPermission(args)
+            //     return {
+            //         status: 200,
+            //         message: "The permission added!",
+            //         data: result,
+            //         token: null
+            //     }
+            // }
 
             const res = await model.updatePermission(args)
 
@@ -44,7 +53,7 @@ export default {
             }
 
             if (!(args.birthDate.trim().match(/^(19[0-9]{2}|2[0-9]{3})-(0[1-9]|1[012])-([123]0|[012][1-9]|31)$/))) {
-                throw new UserInputError("Birth date format yyyy-mm-dd")
+                throw new UserInputError("Invalit input! Birth date format yyyy-mm-dd")
             }
 
             if (!args.gender.trim()) {
@@ -115,7 +124,17 @@ export default {
             })
         },
 
-        staff: async (_, args) => {
+        staff: async (_, args, { token }) => {
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermission(staff)
+            
+            if (!permission?.read) {
+                throw new Error("Not allowed!")
+            }
+
+
+
             return await model.getStaff(args)
         }
         
