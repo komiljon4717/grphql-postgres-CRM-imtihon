@@ -30,6 +30,14 @@ type Mutation {
         address: String
     ): MutationResponse!
 
+    updatePermissionBranch(
+        staffId: ID!
+        create: String
+        read: String
+        update: String
+        deleted: String
+    ): MutationResponse!
+
     deleteBranch(branchId: ID!): MutationResponse!
 }
 

@@ -30,6 +30,11 @@ async function getPermissionBranch({ staffId }){
 }
 
 
+async function updatePermissionBranch({ staffId, create, read, update, deleted }) {
+    const [per] = await db(query.UPDATE_PERMISSIONS_BRANCH, staffId, create, read, update, deleted)
+    return per
+}
+
 
 
 
@@ -44,8 +49,17 @@ async function deleteBranch({ branchId }) {
     return branch
 }
 
+
+
+async function getPermission({ staffId }) {
+    const [per] = await db(query.GET_PERMISSIONS, staffId)
+    return per
+}
+
 export default {
+    updatePermissionBranch,
     getPermissionBranch,
+    getPermission,
     changeBranch,
     deleteBranch,
     getBranches,

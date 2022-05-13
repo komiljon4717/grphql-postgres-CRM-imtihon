@@ -58,10 +58,10 @@ drop table if exists permission_transport cascade;
 create table permission_transport (
     permission_transport_id serial primary key ,
     staff_id int unique not null references staffs(staff_id),
-    created boolean not null default false,
-    read boolean not null default false,
-    update boolean not null default false,
-    delete boolean not null default false
+    created character varying(5) not null default false,
+    read character varying(5) not null default false,
+    update character varying(5) not null default false,
+    delete character varying(5) not null default false
 );
 
 -- permission branches table
@@ -69,10 +69,10 @@ drop table if exists permission_branches cascade;
 create table permission_branches (
     permission_branches_id serial primary key,
     staff_id int unique not null references staffs(staff_id),
-    created boolean not null default false,
-    read boolean not null default false,
-    update boolean not null default false,
-    delete boolean not null default false
+    created character varying(5) not null default false,
+    read character varying(5) not null default false,
+    update character varying(5) not null default false,
+    delete character varying(5) not null default false
 );
 
 
@@ -81,8 +81,8 @@ drop table if exists permission_permissions cascade;
 create table permission_permissions (
     permission_permissions_id serial primary key ,
     staff_id int unique not null references staffs(staff_id),
-    created boolean not null default true,
-    read boolean not null default true,
-    update boolean not null default true,
-    delete boolean not null default true
+    created character varying(5) not null default false,
+    read character varying(5) not null default false,
+    update character varying(5) not null default false,
+    delete character varying(5) not null default false
 );

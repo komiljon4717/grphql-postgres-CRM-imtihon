@@ -120,10 +120,30 @@ returning *
 
 const UPDATE_PERMISSIONS = `
 update permission_permissions p set
-    created = $2,
-    read = $3,
-    update = $4,
-    delete = $5
+    created = (
+        case
+            when length($2) > 0 then $2
+            else p.created
+        end
+    ),
+    read = (
+        case
+        when length($3) > 0 then $3
+            else p.read
+        end
+    ),
+    update = (
+        case
+        when length($4) > 0  then $4
+            else p.update
+        end
+    ),
+    delete = (
+        case
+        when length($5) > 0 then $5
+            else p.delete
+        end
+    )
 where staff_id::varchar = $1
 returning *
 `

@@ -24,7 +24,7 @@ type Mutation {
     ): MutationResponse!
 
 
-    updatePermission(
+    updatePermissionStaff(
         staffId: ID!
         create: String
         read: String

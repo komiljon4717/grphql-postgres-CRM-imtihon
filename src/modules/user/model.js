@@ -34,12 +34,7 @@ async function getPermission({ staffId }) {
     return per
 }
 
-async function updatePermission({ staffId, create="", read="", update="", deleted="" }) {
-    create? create = 1 : create = 0
-    read? read = 1 : read = 0
-    update? update = 1 : update = 0
-    deleted? deleted = 1 : deleted = 0
-    console.log(create, read, update, deleted);
+async function updatePermission({ staffId, create, read, update, deleted }) {
     const [per] = await db(query.UPDATE_PERMISSIONS, staffId, create, read, update, deleted)
     return per
 }

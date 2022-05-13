@@ -38,7 +38,7 @@ export default {
                 (args.branchName && !args.branchName.trim()) ||
                 (args.address && !args.address.trim())
             ) {
-                throw new UserInputError("The username or contact cannot be empty!")
+                throw new UserInputError("The branch name or address cannot be empty!")
             }
 
             const staff = jwt.verify(token)
@@ -82,7 +82,32 @@ export default {
             }
         },
 
+        updatePermissionBranch: async (_, args, { token }) => {
+            const staff = jwt.verify(token)
+            const permission = await model.getPermission(staff)
+            if (!permission?.created) {
+                throw new Error("Not allowed!")
+            }
 
+
+            const res = await model.updatePermissionBranch(args)
+
+            if (!res) {
+                return {
+                    status: 400,
+                    message: "The staff not found!",
+                    data: null,
+                    token: null
+                }
+            }
+
+            return {
+                status: 200,
+                message: "The branch permission updated!",
+                data: res,
+                token: null
+            }
+        }
     },
 
     Query: {

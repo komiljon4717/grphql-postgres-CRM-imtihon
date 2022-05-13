@@ -23,4 +23,4 @@ insert into permission_permissions (staff_id, created, read, update, delete) val
 (1, 'true', 'true', 'true', 'true');
 
 insert into permission_transport (staff_id, created, read, update, delete) values
-(1, 'false', 'false', 'false', 'false');
+(1, 'true', 'false', 'true', 'true');
