@@ -8,9 +8,16 @@ export default {
     Mutation: {
 
 
-        addBranch: async (_, args, { agent }) => {
+        addBranch: async (_, args, { token }) => {
             if (!args.branchName.trim() || !args.address.trim()) {
                 throw new UserInputError("The username and password are required!")
+            }
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermissionBranch(staff)
+            
+            if (!permission?.created) {
+                throw new Error("Not allowed!")
             }
 
             const branch = await model.addBranch(args)
@@ -26,13 +33,21 @@ export default {
 
 
 
-        changeBranch: async (_, args) => {
+        changeBranch: async (_, args, { token }) => {
             if (
                 (args.branchName && !args.branchName.trim()) ||
                 (args.address && !args.address.trim())
             ) {
                 throw new UserInputError("The username or contact cannot be empty!")
             }
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermissionBranch(staff)
+            
+            if (!permission?.update) {
+                throw new Error("Not allowed!")
+            }
+
 
             const branch = await model.changeBranch(args)
             
@@ -43,12 +58,22 @@ export default {
             }
         },
 
-        deleteBranch: async (_, args) => {
+        deleteBranch: async (_, args, { token }) => {
             const branch = await model.deleteBranch(args)
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermissionBranch(staff)
+            
+            if (!permission?.delete) {
+                throw new Error("Not allowed!")
+            }
+
 
             if (!branch) {
                 throw new NotFoundError("The branch not found!") 
             }
+
+            
             
             return {
                 status: 200,
@@ -61,8 +86,15 @@ export default {
     },
 
     Query: {
-        branches: async (_, { pagination, search, sort }, { agent, token }) => {
+        branches: async (_, { pagination, search, sort }, { token }) => {
             const sortKey = Object.keys(sort || {})[0]
+
+            const staff = jwt.verify(token)
+            const permission = await model.getPermissionBranch(staff)
+            
+            if (!permission?.read) {
+                throw new Error("Not allowed!")
+            }
 
 
             return await model.getBranches({

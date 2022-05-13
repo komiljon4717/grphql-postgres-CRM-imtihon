@@ -8,7 +8,7 @@ import sha256 from 'sha256'
 export default {
     Mutation: {
 
-        addPermission: async (_, args, { agent, token }) => {
+        updatePermission: async (_, args, { agent, token }) => {
 
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
@@ -19,16 +19,7 @@ export default {
 
             const chack = await model.getPermission(args)
             
-            console.log(chack);
-            if (!chack) {
-                const result = await model.addPermission(args)
-                return {
-                    status: 200,
-                    message: "The permission added!",
-                    data: result,
-                    token: null
-                }
-            }
+         
 
             const res = await model.updatePermission(args)
 

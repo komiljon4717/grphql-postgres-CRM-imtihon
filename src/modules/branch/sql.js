@@ -67,7 +67,21 @@ branch_id::varchar = $1
 returning * 
 `
 
+
+const GET_PERMISSIONS_BRANCH = `
+select
+    permission_branches_id,
+    staff_id,
+    created,
+    read,
+    update,
+    delete
+from  permission_branches 
+where staff_id = $1 
+`
+
 export default {
+    GET_PERMISSIONS_BRANCH,
     DELETE_BRENCH,
     GET_BRANCHES,
     CHANGE_BRANCH,

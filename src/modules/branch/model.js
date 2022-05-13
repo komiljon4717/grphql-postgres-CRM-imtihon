@@ -24,6 +24,12 @@ async function addBranch({ branchName, address }) {
 }
 
 
+async function getPermissionBranch({ staffId }){
+    const [ branch ] = await db(query.GET_PERMISSIONS_BRANCH, staffId)
+    return branch
+}
+
+
 
 
 
@@ -39,6 +45,7 @@ async function deleteBranch({ branchId }) {
 }
 
 export default {
+    getPermissionBranch,
     changeBranch,
     deleteBranch,
     getBranches,

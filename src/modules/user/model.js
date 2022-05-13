@@ -29,16 +29,8 @@ async function findStaff({ staffName, password }) {
 }
 
 
-
-
 async function getPermission({ staffId }) {
     const [per] = await db(query.GET_PERMISSIONS, staffId)
-    return per
-}
-
-
-async function addPermission({ staffId, create="false", read="false", update="false", deleted="false" }) {
-    const [per] = await db(query.ADD_PERMISSIONS, staffId, create, read, update, deleted)
     return per
 }
 
@@ -47,10 +39,19 @@ async function updatePermission({ staffId, create="", read="", update="", delete
     return per
 }
 
+
+
+async function addPermission({ staffId, create="false", read="false", update="false", deleted="false" }) {
+    const [per] = await db(query.ADD_PERMISSIONS, staffId, create, read, update, deleted)
+    return per
+}
+
+
 async function addPermissionTransport({ staffId, create="false", read="false", update="false", deleted="false" }) {
     const [per] = await db(query.ADD_PERMISSIONS_TRANSPORT, staffId, create, read, update, deleted)
     return per
 }
+
 
 async function addPermissionBranch({ staffId, create="false", read="false", update="false", deleted="false" }) {
     const [per] = await db(query.ADD_PERMISSIONS_BRANCH, staffId, create, read, update, deleted)

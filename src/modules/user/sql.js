@@ -122,7 +122,7 @@ const UPDATE_PERMISSIONS = `
 update permission_permissions p set
     created = (
         case
-            when $2 > false then $2
+            when $2 = p.created then $2
             else p.created
         end
     ),
