@@ -72,7 +72,11 @@ export default {
             }
 
             if (!args.gender.trim()) {
-                throw new UserInputError("The gender mast be 'M' or 'F'!")
+                throw new UserInputError("The gender must not empty!")
+            }
+
+            if (!(args.gender == "M") && !(args.gender == "F")) {
+                throw new UserInputError("The gender must be 'M' or 'F'!")
             }
 
             const staff = await model.addUser(args)
