@@ -54,3 +54,5 @@ type Transport {
     autoImg: String!
     time: String!
 }
+
+

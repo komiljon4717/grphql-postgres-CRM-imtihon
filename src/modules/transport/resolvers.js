@@ -65,8 +65,8 @@ export default {
         
         
 
-        changeTransport: async (_, args, { token, host }) => {
-            console.log(host);
+        changeTransport: async (_, args, { token }) => {
+
             if (
                 (args.autoModel && !args.autoModel.trim()) ||
                 (args.autoColor && !args.autoColor.trim())
@@ -83,6 +83,10 @@ export default {
 
 
             const transport = await model.changeTransport(args)
+
+            if (!transport) {
+                throw new Error("The Transport not found!")
+            }
             
             return {
                 status: 200,
@@ -117,12 +121,22 @@ export default {
 
         updatePermissionTransport: async (_, args, { token }) => {
 
-            if (!(args.created == "false" || args.created == "true") &&
-            !(args.updated == "false" || args.updated == "true") && 
-            !(args.read == "false" || args.read == "true") &&
-            !(args.deleted == "false" || args.deleted == "true")) {
-               throw new Error("C.R.U.D values must be 'true' or 'false'")
+            if (args.create?.trim() && !(args.create == "false" || args.create == "true")) {
+                throw new Error("Create values must be 'true' or 'false'")
            }
+
+
+           if (args.update?.trim() && !(args.update == "false" || args.update == "true")) {
+                throw new Error("Update values must be 'true' or 'false'")
+            }
+
+            if (args.read?.trim() && !(args.read == "false" || args.read == "true")) {
+                throw new Error("Read values must be 'true' or 'false'")
+            }
+
+            if (args.deleted?.trim() && !(args.deleted == "false" || args.deleted == "true")) {
+                throw new Error("Deleted values must be 'true' or 'false'")
+            }
 
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
@@ -145,7 +159,7 @@ export default {
             return {
                 status: 200,
                 message: "The branch permission updated!",
-                data: res,
+                data: null,
                 token: null
             }
         }

@@ -141,6 +141,7 @@ const GET_STAFF = `
     where s.staff_id = $1
 `
 
+
 export default {
     UPDATE_PERMISSIONS_TRANSPORT,
     GET_PERMISSIONS_TRANSPORT,

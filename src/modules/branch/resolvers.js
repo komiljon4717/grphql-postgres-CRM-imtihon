@@ -22,12 +22,10 @@ export default {
 
             const branch = await model.addBranch(args)
 
-
             return {
                 status: 200,
                 message: "The branch added!",
                 data: branch,
-                token: null
             }
         },
 
@@ -48,8 +46,11 @@ export default {
                 throw new Error("Not allowed!")
             }
 
-
             const branch = await model.changeBranch(args)
+
+            if (!branch) {
+                throw new Error("Branch not found!")
+            }
             
             return {
                 status: 200,
@@ -73,8 +74,6 @@ export default {
             if (!branch) {
                 throw new NotFoundError("The branch not found!") 
             }
-
-            
             
             return {
                 status: 200,
@@ -85,12 +84,22 @@ export default {
 
         updatePermissionBranch: async (_, args, { token }) => {
 
-            if (!(args.created == "false" || args.created == "true") &&
-            !(args.updated == "false" || args.updated == "true") && 
-            !(args.read == "false" || args.read == "true") &&
-            !(args.deleted == "false" || args.deleted == "true")) {
-               throw new Error("C.R.U.D values must be 'true' or 'false'")
+           if (args.create?.trim() && !(args.create == "false" || args.create == "true")) {
+                throw new Error("Create values must be 'true' or 'false'")
            }
+
+
+           if (args.update?.trim() && !(args.update == "false" || args.update == "true")) {
+                throw new Error("Update values must be 'true' or 'false'")
+            }
+
+            if (args.read?.trim() && !(args.read == "false" || args.read == "true")) {
+                throw new Error("Read values must be 'true' or 'false'")
+            }
+
+            if (args.deleted?.trim() && !(args.deleted == "false" || args.deleted == "true")) {
+                throw new Error("Deleted values must be 'true' or 'false'")
+            }
 
             const staff = jwt.verify(token)
             const permission = await model.getPermission(staff)
@@ -106,15 +115,13 @@ export default {
                     status: 400,
                     message: "The staff not found!",
                     data: null,
-                    token: null
                 }
             }
 
             return {
                 status: 200,
                 message: "The branch permission updated!",
-                data: res,
-                token: null
+                data: null,
             }
         }
     },
@@ -131,7 +138,7 @@ export default {
             }
 
 
-            return await model.getTransports({
+            return await model.getBranches({
                 page: pagination?.page || BRANCH_CONFIG.PAGINATION.PAGE,
                 limit: pagination?.limit || BRANCH_CONFIG.PAGINATION.LIMIT,
                 sortValue: sort ? sort[sortKey] : null,

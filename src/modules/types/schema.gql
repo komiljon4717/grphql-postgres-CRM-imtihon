@@ -23,5 +23,8 @@ type MutationResponse {
     token: String
 }
 
+
+
+
 ## union types
 union GlobalType = Staff | Branch |Transport

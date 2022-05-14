@@ -30,6 +30,7 @@ const GET_STAFF = `
     select 
         s.staff_id,
         s.staff_name,
+        s.branch_id,
         s.birth_date,
         s.staff_gender,
         s.staff_created_at
