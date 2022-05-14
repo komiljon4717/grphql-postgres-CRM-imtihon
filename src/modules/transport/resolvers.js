@@ -85,7 +85,7 @@ export default {
             const transport = await model.changeTransport(args)
 
             if (!transport) {
-                throw new Error("The Transport not found!")
+                throw new Error("The transport not found!")
             }
             
             return {
@@ -109,12 +109,12 @@ export default {
             console.log(args);
 
             if (!transport) {
-                throw new NotFoundError("The branch not found!") 
+                throw new NotFoundError("The transport not found!") 
             }
             
             return {
                 status: 200,
-                message: "The branch deleted!",
+                message: "The transport deleted!",
                 data: transport
             }
         },
@@ -158,7 +158,7 @@ export default {
 
             return {
                 status: 200,
-                message: "The branch permission updated!",
+                message: "The transport permission updated!",
                 data: null,
                 token: null
             }
