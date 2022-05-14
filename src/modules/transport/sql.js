@@ -38,37 +38,39 @@ const GET_TRANSPORT = `
     where transports.auto_id = $1
 `
 
-const ADD_BRANCH = `
-    insert into branches (
-        branch_name,
-        branch_address
-    ) values ($1, $2)
+const ADD_TRANSPORT = `
+    insert into transports (
+        auto_model,
+        auto_branch,
+        auto_color,
+        auto_img
+    ) values ($1, $2, $3, $4)
     returning *
 `
 
-const CHANGE_BRANCH = `
-update branches b set
-    branch_name = (
+const CHANGE_TRANSPORT = `
+update transports b set
+    auto_model = (
         case
             when length($2) > 0 then $2
-            else b.branch_name
+            else b.auto_model
         end
     ),
-    branch_address = (
+    auto_color = (
         case
             when length($3) > 0 then $3
-            else b.branch_address
+            else b.auto_color
         end
     )
-where branch_id::varchar = $1
+where auto_id::varchar = $1
 returning *
 `
 
 
-const DELETE_BRENCH = `
-delete from branches
+const DELETE_TRANSPORT = `
+delete from transports
 where
-branch_id::varchar = $1
+auto_id::varchar = $1
 returning * 
 `
 
@@ -127,13 +129,26 @@ from  permission_permissions
 where staff_id = $1 
 `
 
+const GET_STAFF = `
+    select 
+        s.staff_id,
+        s.staff_name,
+        s.branch_id,
+        s.birth_date,
+        s.staff_gender,
+        s.staff_created_at
+    from staffs s
+    where s.staff_id = $1
+`
+
 export default {
     UPDATE_PERMISSIONS_TRANSPORT,
     GET_PERMISSIONS_TRANSPORT,
     GET_PERMISSIONS,
     GET_TRANSPORTS,
-    DELETE_BRENCH,
-    CHANGE_BRANCH,
+    DELETE_TRANSPORT,
+    CHANGE_TRANSPORT,
     GET_TRANSPORT,
-    ADD_BRANCH
+    ADD_TRANSPORT,
+    GET_STAFF
 }

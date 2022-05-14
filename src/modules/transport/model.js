@@ -18,8 +18,8 @@ async function getTransport({ autoId }) {
 }
 
 
-async function addBranch({ branchName, address }) {
-    const [branch] = await db(query.ADD_BRANCH, branchName, address)
+async function addtransport({ autoModel, autoBranch, autoColor, autoImg }) {
+    const [branch] = await db(query.ADD_TRANSPORT, autoModel, autoBranch, autoColor, autoImg)
     return branch
 }
 
@@ -39,14 +39,14 @@ async function updatePermissionTransport({ staffId, create, read, update, delete
 
 
 
-async function changeBranch({ branchId, branchName, address }) {
-    const [branch] = await db(query.CHANGE_BRANCH, branchId, branchName, address)
-    return branch
+async function changeTransport({ autoId, autoModel, autoColor }) {
+    const [transport] = await db(query.CHANGE_TRANSPORT, autoId, autoModel, autoColor)
+    return transport
 }
 
-async function deleteBranch({ branchId }) {
-    const [branch] = await db(query.DELETE_BRENCH, branchId)
-    return branch
+async function deleteTransport({ autoId }) {
+    const [transport] = await db(query.DELETE_TRANSPORT, autoId)
+    return transport
 }
 
 
@@ -56,13 +56,21 @@ async function getPermission({ staffId }) {
     return per
 }
 
+async function getStaff({ staffId }) {
+    const [staff] = await db(query.GET_STAFF, staffId)
+    return staff
+}
+
+
+
 export default {
     updatePermissionTransport,
     getPermissionTransport,
     getPermission,
-    changeBranch,
-    deleteBranch,
+    changeTransport,
+    deleteTransport,
     getTransports,
-    addBranch,
-    getTransport
+    addtransport,
+    getTransport,
+    getStaff
 }

@@ -5,7 +5,6 @@ const GET_STAFFS = `
         s.branch_id,
         s.birth_date,
         s.staff_gender,
-        b.branch_name,
         s.staff_created_at
     from staffs as s
     inner join branches as b on s.branch_id = b.branch_id
@@ -32,11 +31,9 @@ const GET_STAFF = `
         s.staff_id,
         s.staff_name,
         s.birth_date,
-        b.branch_id,
         s.staff_gender,
         s.staff_created_at
     from staffs s
-    inner join branches b on s.branch_id = b.branch_id
     where s.staff_id = $1
 `
 

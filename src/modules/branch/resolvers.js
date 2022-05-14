@@ -59,7 +59,6 @@ export default {
         },
 
         deleteBranch: async (_, args, { token }) => {
-            const branch = await model.deleteBranch(args)
 
             const staff = jwt.verify(token)
             const permission = await model.getPermissionBranch(staff)
@@ -68,6 +67,8 @@ export default {
                 throw new Error("Not allowed!")
             }
 
+
+            const branch = await model.deleteBranch(args)
 
             if (!branch) {
                 throw new NotFoundError("The branch not found!") 

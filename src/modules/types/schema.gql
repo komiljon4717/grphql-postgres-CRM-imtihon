@@ -24,4 +24,4 @@ type MutationResponse {
 }
 
 ## union types
-union GlobalType = Staff | Branch
+union GlobalType = Staff | Branch |Transport

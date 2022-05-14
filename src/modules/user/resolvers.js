@@ -84,6 +84,7 @@ export default {
             }
 
             const staff = await model.findStaff(args)
+            console.log(staff);
 
             if (!staff) {
                 return {
@@ -164,7 +165,7 @@ export default {
     Staff: {
         staffId: global => global.staff_id,
         staffName: global => global.staff_name,
-        branch: global =>global.branch_name,
+        branch: global =>global.branch_id,
         birthDate: global => global.birth_date?.toISOString().slice(0,10),
         gender: global => global.staff_gender,
         time: global => global.staff_created_at?.toISOString()

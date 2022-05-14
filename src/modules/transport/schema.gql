@@ -30,9 +30,9 @@ type Mutation {
 
 
     changeTransport(
-        branchId: ID!
-        branchName: String
-        address: String
+        autoId: ID!
+        autoModel: String
+        autoColor: String
     ): MutationResponse!
 
     updatePermissionTransport(
@@ -43,7 +43,7 @@ type Mutation {
         deleted: String
     ): MutationResponse!
 
-    deleteTransport(branchId: ID!): MutationResponse!
+    deleteTransport(autoId: ID!): MutationResponse!
 }
 
 type Transport {

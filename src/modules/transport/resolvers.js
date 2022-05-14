@@ -16,6 +16,27 @@ export default {
 
 
         addTransport: async (_, args, { token }) => {
+
+            const staff = jwt.verify(token)
+            const chackStaff = await model.getStaff(staff)
+            
+            if (!(staff.staffId == 1)) {
+                if (!(chackStaff.branch_id == args.autoBranch)) {
+                    throw new Error("You are not allowed in this branch!")
+                }
+            }
+            
+            const permission = await model.getPermissionTransport(staff)
+            
+            if (!(permission?.created == "true")) {
+                throw new Error("Not allowed!")
+            }
+
+            if (!args.autoModel.trim() || !args.autoBranch.trim() || !args.autoColor.trim()) {
+                throw new UserInputError("The username and password are required!")
+            }
+            
+
             const {autoImg} = await args
             const { filename, mimetype, createReadStream} = await autoImg
 
@@ -23,81 +44,74 @@ export default {
                 throw new Error("Invalid mimetype")
             }
 
+            args.autoImg = Date.now() + filename.replace(/\s/g, "")
             const stream = createReadStream()
-            const out = fs.createWriteStream(path.join(process.cwd(), 'uploads', filename))
+            const out = fs.createWriteStream(path.join(process.cwd(), 'uploads', args.autoImg))
             stream.pipe(out)
             await finished(out)
             
-            if (!args.autoModel.trim() || !args.autoBranch.trim() || !args.autoColor.trim()) {
-                throw new UserInputError("The username and password are required!")
-            }
 
-            const staff = jwt.verify(token)
-            const permission = await model.getPermissionTransport(staff)
-            
-            if (!(permission?.created == "true")) {
-                throw new Error("Not allowed!")
-            }
 
-            // const branch = await model.addBranch(args)
-
+            const transport = await model.addtransport(args)
 
             return {
                 status: 200,
-                message: "The branch added!",
-                data: null,
+                message: "The transport added!",
+                data: transport,
                 token: null
             }
         },
 
+        
+        
 
-
-        changeTransport: async (_, args, { token }) => {
+        changeTransport: async (_, args, { token, host }) => {
+            console.log(host);
             if (
-                (args.branchName && !args.branchName.trim()) ||
-                (args.address && !args.address.trim())
+                (args.autoModel && !args.autoModel.trim()) ||
+                (args.autoColor && !args.autoColor.trim())
             ) {
-                throw new UserInputError("The branch name or address cannot be empty!")
+                throw new UserInputError("The autoModel or autoBranch or autoColor cannot be empty!")
             }
 
             const staff = jwt.verify(token)
-            const permission = await model.getPermissionBranch(staff)
+            const permission = await model.getPermissionTransport(staff)
             
             if (!(permission?.update == "true")) {
                 throw new Error("Not allowed!")
             }
 
 
-            const branch = await model.changeBranch(args)
+            const transport = await model.changeTransport(args)
             
             return {
                 status: 200,
-                message: "The branch changed!",
-                data: branch
+                message: "The transport changed!",
+                data: transport
             }
         },
 
         deleteTransport: async (_, args, { token }) => {
-            const branch = await model.deleteBranch(args)
 
             const staff = jwt.verify(token)
-            const permission = await model.getPermissionBranch(staff)
+            const permission = await model.getPermissionTransport(staff)
+            
             
             if (!(permission?.delete == "true")) {
                 throw new Error("Not allowed!")
             }
 
+            const transport = await model.deleteTransport(args)
+            console.log(args);
 
-            if (!branch) {
+            if (!transport) {
                 throw new NotFoundError("The branch not found!") 
             }
-
-            
             
             return {
                 status: 200,
                 message: "The branch deleted!",
-                data: branch
+                data: transport
             }
         },
 
